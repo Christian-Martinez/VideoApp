@@ -1,25 +1,16 @@
 import React from 'react';
-import {
-   Text,
-   View,
-   Image,
-   StyleSheet,
-   ActivityIndicator,
-} from 'react-native';
+import {View, Image, StyleSheet, ActivityIndicator} from 'react-native';
 
-export default function Loading(props){
-   return (
-      <View style={styles.container}>
-        <Image
-            source = {require('../../../assets/logo.png')}
-            style={styles.logo}
-         />
-         <ActivityIndicator/>
-      </View>
-   );
+export default function Loading (props) {
+  return (
+    <View style={styles.container}>
+      <Image source={require ('../../assets/cruze.jpg')} style={styles.logo} />
+      <ActivityIndicator />
+    </View>
+  );
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create ({
   logo: {
     width: 700,
     height: 350,
@@ -29,6 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent:'center' 
+    justifyContent: 'center',
   },
-})
+});

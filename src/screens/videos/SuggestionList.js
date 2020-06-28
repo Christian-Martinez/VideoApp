@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
 
 import API from 'VideoApp/src/utils';
 import Suggestion from './components/Suggestion';
@@ -7,16 +8,14 @@ import Empty from 'VideoApp/src/components/Empty';
 import Separator from 'VideoApp/src/components/VerticalSeparator';
 
 class SuggestionList extends Component {
-  state = {
-    list: null,
-  };
-
   async componentDidMount () {
-    const list = await API.getSuggestion (10);
-    //console.log(list);
-    if (list !== null) {
-      this.setState ({list});
-    }
+    const suggestionList = await API.getSuggestion (10);
+    this.props.dispatch ({
+      type: 'SET_CATEGORY_LIST',
+      payload: {
+        suggestionList,
+      },
+    });
   }
 
   renderItem = ({item}) => {
@@ -29,7 +28,7 @@ class SuggestionList extends Component {
         <Text style={styles.title}>Recomendado para tí</Text>
         <FlatList
           keyExtractor={item => item.id.toString ()}
-          data={this.state.list}
+          data={this.props.list}
           ListEmptyComponent={() => <Empty text="No hay sugerencias" />}
           ItemSeparatorComponent={() => <Separator />}
           renderItem={this.renderItem}
@@ -39,7 +38,13 @@ class SuggestionList extends Component {
   }
 }
 
-export default SuggestionList;
+function mapStateToProps (state) {
+  return {
+    list: state.videos.suggestionList,
+  };
+}
+
+export default connect (mapStateToProps) (SuggestionList);
 
 const styles = StyleSheet.create ({
   container: {

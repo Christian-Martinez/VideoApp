@@ -1,22 +1,21 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 
-import Header from 'VideoApp/src/components/Header';
-import Player from './src/screens/player';
-import CategoryList from './src/screens/videos/CategoryList';
-import SuggestionList from './src/screens/videos/SuggestionList';
+import AppLayout from './src/screens';
+import Loading from './src/components/Loading';
+import configureStore from './src/redux/store';
+
+const {store, persistor} = configureStore ();
 
 export default class App extends Component {
   render () {
     return (
-      <>
-        <Header>
-          <Text>Header</Text>
-        </Header>
-        <Player/>
-        <CategoryList />
-        <SuggestionList />
-      </>
+      <Provider store={store}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <AppLayout />
+        </PersistGate>
+      </Provider>
     );
   }
 }
