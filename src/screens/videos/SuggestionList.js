@@ -18,8 +18,17 @@ class SuggestionList extends Component {
     });
   }
 
+  viewMovie = (item) => {
+    this.props.dispatch({
+      type: 'SET_SELECTED_MOVIE',
+      payload: {
+        movie: item,
+      },
+    })
+  }
+
   renderItem = ({item}) => {
-    return <Suggestion {...item} />;
+    return <Suggestion {...item} onPress={() => this.viewMovie(item)}/>;
   };
 
   render () {
